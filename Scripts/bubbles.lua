@@ -30,28 +30,58 @@ end
 ----------------------------------------UPDATE----------------------------------------------------
 
 function Bubbles:update(dt)
-
   -- Update the time since the last spawn
   self.timeSinceLastSpawn = self.timeSinceLastSpawn + dt
 
   -- Loop through all bubbles and update their positions
-  for i, bubble in ipairs(self.list) do
-    bubble.y = bubble.y - bubble.speed * dt -- Make the bubble float up
-    bubble.x = bubble.x + math.sin(bubble.timer * 2) * bubble.wiggle_amplitude -- Wiggle left and right
-    bubble.timer = bubble.timer + dt -- Update wiggle timer
+  for i = #self.list, 1, -1 do
+      local bubble = self.list[i]
+      bubble.y = bubble.y - bubble.speed * dt -- Make the bubble float up
+      bubble.x = bubble.x + math.sin(bubble.timer * 2) * bubble.wiggle_amplitude -- Wiggle left and right
+      bubble.timer = bubble.timer + dt -- Update wiggle timer
 
-    -- Remove the bubble if it goes off the screen
-    if bubble.y + bubble.size < 0 then
-      table.remove(self.list, i)
-    end
+      -- Remove the bubble if it goes off the top of the screen
+      local bubbleHeight = self.sprite:getHeight() * bubble.size
+      if bubble.y + bubbleHeight < 0 then
+          table.remove(self.list, i)
+      end
+  end
+
+  -- Check collisions between bullets and bubbles
+  for i = #Player.bullets, 1, -1 do
+      local bullet = Player.bullets[i]
+      for j = #self.list, 1, -1 do
+          local bubble = self.list[j]
+          
+          -- Calculate bubble's actual dimensions and position
+          local bubbleWidth = self.sprite:getWidth() * bubble.size
+          local bubbleHeight = self.sprite:getHeight() * bubble.size
+          local bubbleCenterX = bubble.x + bubbleWidth/2
+          local bubbleCenterY = bubble.y + bubbleHeight/2
+          
+          -- Calculate distance between bullet and bubble center
+          local dx = bullet.x - bubbleCenterX
+          local dy = bullet.y - bubbleCenterY
+          local distanceSquared = dx*dx + dy*dy
+          
+          -- Calculate collision radius (bubble radius + bullet radius)
+          local collisionRadius = (math.max(bubbleWidth, bubbleHeight)/2) + 3
+          local collisionRadiusSquared = collisionRadius * collisionRadius
+          
+          -- Check collision and remove both if they intersect
+          if distanceSquared < collisionRadiusSquared then
+              table.remove(Player.bullets, i)
+              table.remove(self.list, j)
+              break -- Only hit one bubble per bullet
+          end
+      end
   end
 
   -- Spawn new bubble if enough time has passed since the last spawn
   if self.timeSinceLastSpawn >= self.spawnCooldown then
-    self:spawnBubble()
-    self.timeSinceLastSpawn = 0 -- Reset the spawn timer
+      self:spawnBubble()
+      self.timeSinceLastSpawn = 0 -- Reset the spawn timer
   end
-
 end
 
 ----------------------------------------DRAW----------------------------------------------------
