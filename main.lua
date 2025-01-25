@@ -43,12 +43,7 @@ function love.keypressed(key, scancode, isrepeat)
   
 end
 
-function love.mousepressed(x, y, button, isTouch)
-    
-    love.audio.stop(sounds.click)
-    love.audio.play(sounds.click)
 
-end
 
 
 ----------------------------------------DRAW----------------------------------------------------
