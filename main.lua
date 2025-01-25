@@ -4,6 +4,7 @@
 ----------------------------------------REQUIRES----------------------------------------------------
 --Libreries and Scripts
 require "Scripts.Load_Media"
+require "Scripts.Menue"
 -- require "Scripts.Menue"
 lume = require "Scripts.lume" --https://github.com/rxi/lume --Extra usful functions
 
@@ -17,6 +18,8 @@ function love.load(arg)
 
   -- Load media
   sounds, cursor_s = load_media()
+
+  Menu:load()
 end
 
 ----------------------------------------UPDATE----------------------------------------------------
@@ -26,7 +29,7 @@ function love.update(dt)
   cursor_x, cursor_y = love.mouse.getPosition()
 
   --Games update here
-
+  Menu:update(dt)
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -35,7 +38,7 @@ end
 
 function love.mousepressed(x, y, button, isTouch)
   love.audio.stop(sounds.click)
-  love.audio.play(sounds.click) -- todo Change this to fart sounds
+  love.audio.play(sounds.click)
 end
 
 
@@ -43,7 +46,7 @@ end
 
 function love.draw()
 
+  Menu:draw()
   love.graphics.draw(cursor_s, cursor_x, cursor_y)
-  
 
 end

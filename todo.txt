@@ -1,0 +1,10 @@
+[DONE] config files: resolution dial screen
+
+bubes spaning floating
+
+coalition if buble touches player
+ 
+nta:
+start menue
+player movment and gun mouse tracking
+9leb 3la l assets
