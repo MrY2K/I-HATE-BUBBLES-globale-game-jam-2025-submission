@@ -1,4 +1,6 @@
 Player = {
+    hearts = 3,
+    gameOver = false,
     bullets = {},    -- Table to track active bullets
     maxAmmo = 20,    -- Maximum ammo capacity
     currentAmmo = 20,-- Current ammo count
@@ -10,6 +12,8 @@ Player = {
 }
 
 function Player:load()
+    self.hearts = 3  -- Reset hearts when loading
+    self.gameOver = false
 
  -- Add this sound initialization
  self.clickSound = love.audio.newSource("Media/Sound/fart_quick.wav", "static")
@@ -40,6 +44,7 @@ end
 
 function Player:update(dt)
 
+    if self.gameOver then return end  -- Stop all updates when dead
 
 
     local angular_acceleration = -character.gravity / rope_length * math.sin(character.angle)
@@ -96,7 +101,11 @@ function Player:update(dt)
         self.currentAmmo = self.currentAmmo - 1
         self.timeSinceLastShot = 0  -- Reset cooldown timer
         
-        -- Optional: Add screen shake or sound effect here
+            -- Play shoot sound (optional)
+        if self.shootSound then  -- Add this sound to your Player:load
+            love.audio.stop(self.shootSound)
+            love.audio.play(self.shootSound)
+        end
     end
     
     -- Reload with R key
@@ -104,6 +113,19 @@ function Player:update(dt)
         self.currentAmmo = self.maxAmmo
     end
 end
+
+function love.mousepressed(x, y, button, isTouch)
+    if button == 1 then  -- Only handle left clicks
+        love.audio.stop(sounds.click)
+        
+        -- Only play sound if player has ammo
+        if Player.currentAmmo > 0 then
+            love.audio.play(sounds.click)
+        end
+    end
+end
+
+----------------------------------------DRAW----------------------------------------------------
 
 function Player:draw()
 
@@ -158,5 +180,50 @@ function Player:draw()
             love.graphics.getHeight() - 50)
         love.graphics.setColor(1, 1, 1)  -- Reset to white color
     end
+
+
+   -- Draw hearts in top-right corner
+   local heartSpacing = 40
+   love.graphics.setColor(1, 0, 0)  -- Red color
+   for i = 1, 3 do
+       if i <= self.hearts then
+           -- Draw filled heart (simple version using rectangles)
+           love.graphics.rectangle('fill', 
+               love.graphics.getWidth() - (i * heartSpacing), 
+               10, 
+               30,  -- Width
+               30   -- Height
+           )
+       else
+           -- Draw empty heart outline
+           love.graphics.setColor(0.5, 0, 0)
+           love.graphics.rectangle('line', 
+               love.graphics.getWidth() - (i * heartSpacing), 
+               10, 
+               30, 
+               30
+           )
+           love.graphics.setColor(1, 0, 0)
+       end
+   end
+   love.graphics.setColor(1, 1, 1)  -- Reset color
+
+   -- Draw game over screen
+   if self.gameOver then
+       love.graphics.setColor(1, 0, 0)
+       local text = "GAME OVER"
+       local font = love.graphics.newFont(40)
+       local oldFont = love.graphics.getFont()
+       love.graphics.setFont(font)
+       local textWidth = font:getWidth(text)
+       love.graphics.print(text, 
+           (love.graphics.getWidth() - textWidth)/2, 
+           love.graphics.getHeight()/2 - 50
+       )
+       love.graphics.setFont(oldFont)
+       love.graphics.setColor(1, 1, 1)
+   end
+
+
 
 end

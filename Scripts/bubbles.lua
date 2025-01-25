@@ -82,6 +82,39 @@ function Bubbles:update(dt)
       self:spawnBubble()
       self.timeSinceLastSpawn = 0 -- Reset the spawn timer
   end
+
+-- Check collisions between bubbles and player
+  for i = #self.list, 1, -1 do
+    local bubble = self.list[i]
+    
+    -- Calculate bubble collision area
+    local bubbleWidth = self.sprite:getWidth() * bubble.size
+    local bubbleHeight = self.sprite:getHeight() * bubble.size
+    local bubbleCenterX = bubble.x + bubbleWidth/2
+    local bubbleCenterY = bubble.y + bubbleHeight/2
+    
+    -- Calculate player collision area (assuming 50x50 rectangle)
+    local playerSize = 25  -- Half of 50px rectangle
+    local playerCenterX = character.x
+    local playerCenterY = character.y
+    
+    -- Check collision using circle approximation
+    local dx = bubbleCenterX - playerCenterX
+    local dy = bubbleCenterY - playerCenterY
+    local distance = math.sqrt(dx*dx + dy*dy)
+    local collisionDistance = playerSize + (math.max(bubbleWidth, bubbleHeight)/2)
+    
+    if distance < collisionDistance and not Player.gameOver then
+        table.remove(self.list, i)
+        Player.hearts = Player.hearts - 1
+        
+        if Player.hearts <= 0 then
+            Player.gameOver = true
+            -- You could add game over sound here
+        end
+    end
+  end
+
 end
 
 ----------------------------------------DRAW----------------------------------------------------
