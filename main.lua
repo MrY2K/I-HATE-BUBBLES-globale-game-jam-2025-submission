@@ -4,9 +4,8 @@ game_state = "menu" -- Game state
 ----------------------------------------REQUIRES----------------------------------------------------
 --Libreries and Scripts
 require "Scripts.Load_Media"
--- require "Scripts.menu"
+require "Scripts.menu"
 require "Scripts.player"
--- require "Scripts.menu"
 lume = require "Scripts.lume" --https://github.com/rxi/lume --Extra usful functions
 
 
@@ -20,7 +19,7 @@ function love.load(arg)
   -- Load media
   sounds, cursor_s = load_media()
 
-  -- Menu:load()
+  Menu:load()
   Player:load()
 end
 
@@ -31,7 +30,7 @@ function love.update(dt)
   cursor_x, cursor_y = love.mouse.getPosition()
 
   --Games update here
-  -- Menu:update(dt)
+  
   Player:update(dt)
 
 end
@@ -50,7 +49,7 @@ end
 
 function love.draw()
 
-  -- Menu:draw()
+  Menu:draw()
   Player:draw()
   love.graphics.draw(cursor_s, cursor_x, cursor_y)
 

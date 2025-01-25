@@ -1,7 +1,6 @@
-Menu = {}
-function Menu:load()
-    background = love.graphics.newImage("Media/Image/menu_back.png")  -- Replace with your image path
+function love.load()
     -- Load background image
+    background = love.graphics.newImage("Media/Image/menu_back.png")  -- Replace with your image path
     
     -- Store original image dimensions
     bg_width = background:getWidth()
@@ -15,11 +14,10 @@ function Menu:load()
     scale = math.max(scale_x, scale_y)
 end
 
-function Menu:draw()
+function love.draw()
     -- Draw background image scaled to fill window
     love.graphics.draw(background, 
         0, 0,  -- Position at top-left corner
         0,     -- No rotation
         scale, scale)  -- Scale to fill window
 end
-return Menu
