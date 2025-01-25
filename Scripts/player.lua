@@ -1,4 +1,7 @@
 Player = {
+
+    hitSound = nil,
+
     hearts = 3,
     gameOver = false,
     bullets = {},    -- Table to track active bullets
@@ -17,7 +20,7 @@ function Player:load()
 
  -- Add this sound initialization
  self.clickSound = love.audio.newSource("Media/Sound/fart_quick.wav", "static")
-
+    self.hitSound = love.audio.newSource("Media/Sound/02.wav", "static")  -- Add your sound file
     -- Existing anchor/character initialization remains the same --
     self.currentAmmo = self.maxAmmo  -- Reset ammo when loading
     self.bullets = {}                -- Clear existing bullets
@@ -114,16 +117,7 @@ function Player:update(dt)
     end
 end
 
-function love.mousepressed(x, y, button, isTouch)
-    if button == 1 then  -- Only handle left clicks
-        love.audio.stop(sounds.click)
-        
-        -- Only play sound if player has ammo
-        if Player.currentAmmo > 0 then
-            love.audio.play(sounds.click)
-        end
-    end
-end
+
 
 ----------------------------------------DRAW----------------------------------------------------
 
