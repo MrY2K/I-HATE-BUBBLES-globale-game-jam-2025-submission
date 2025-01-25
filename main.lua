@@ -6,7 +6,7 @@ game_state = "menu" -- Game state
 require "Scripts.Load_Media"
 -- require "Scripts.menu"
 require "Scripts.player"
--- require "Scripts.menu"
+require "Scripts.bubbles"
 lume = require "Scripts.lume" --https://github.com/rxi/lume --Extra usful functions
 
 
@@ -22,6 +22,8 @@ function love.load(arg)
 
   -- Menu:load()
   Player:load()
+  Bubbles:load()
+
 end
 
 ----------------------------------------UPDATE----------------------------------------------------
@@ -33,6 +35,7 @@ function love.update(dt)
   --Games update here
   -- Menu:update(dt)
   Player:update(dt)
+  Bubbles:update(dt)
 
 end
 
@@ -51,7 +54,14 @@ end
 function love.draw()
 
   -- Menu:draw()
+  
+  -- Player:
   Player:draw()
+  
+  --Bubles
+  Bubbles:draw()
+
+  --Draw Cursur
   love.graphics.draw(cursor_s, cursor_x, cursor_y)
 
 end
