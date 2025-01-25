@@ -6,6 +6,7 @@ game_state = "menu" -- Game state
 require "Scripts.Load_Media"
 require "Scripts.menu"
 require "Scripts.player"
+require "Scripts.bubbles"
 lume = require "Scripts.lume" --https://github.com/rxi/lume --Extra usful functions
 
 
@@ -43,8 +44,10 @@ function love.keypressed(key, scancode, isrepeat)
 end
 
 function love.mousepressed(x, y, button, isTouch)
-  love.audio.stop(sounds.click)
-  love.audio.play(sounds.click)
+    
+    love.audio.stop(sounds.click)
+    love.audio.play(sounds.click)
+
 end
 
 
