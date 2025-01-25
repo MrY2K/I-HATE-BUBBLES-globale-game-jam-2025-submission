@@ -21,6 +21,8 @@ function love.load(arg)
 
   Menu:load()
   Player:load()
+  Bubbles:load()
+
 end
 
 ----------------------------------------UPDATE----------------------------------------------------
@@ -32,6 +34,7 @@ function love.update(dt)
   --Games update here
   
   Player:update(dt)
+  Bubbles:update(dt)
 
 end
 
@@ -51,6 +54,11 @@ function love.draw()
 
   Menu:draw()
   Player:draw()
+  
+  --Bubles
+  Bubbles:draw()
+
+  --Draw Cursur
   love.graphics.draw(cursor_s, cursor_x, cursor_y)
 
 end

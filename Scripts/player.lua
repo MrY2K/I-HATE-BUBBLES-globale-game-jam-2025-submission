@@ -37,12 +37,13 @@ function Player:update(dt)
 end
 
 function Player:draw()
-    love.graphics.setColor(150/255, 75/255, 0)
+
+    -- love.graphics.setColor(150/255, 75/255, 0)
     love.graphics.line(anchor.x, anchor.y, character.x, character.y)
     
-    love.graphics.setColor(1, 1, 1)
+    -- love.graphics.setColor(1, 1, 1)
     love.graphics.circle('fill', anchor.x, anchor.y, 5)
     
-    love.graphics.setColor(1, 0, 0)
+    -- love.graphics.setColor(1, 0, 0)
     love.graphics.rectangle('fill', character.x - 25, character.y - 25, 50, 50)
 end
