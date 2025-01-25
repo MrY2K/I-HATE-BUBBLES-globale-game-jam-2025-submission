@@ -107,6 +107,10 @@ function Bubbles:update(dt)
     if distance < collisionDistance and not Player.gameOver then
         table.remove(self.list, i)
         Player.hearts = Player.hearts - 1
+
+        -- Play hit sound
+        love.audio.stop(Player.hitSound)
+        love.audio.play(Player.hitSound)
         
         if Player.hearts <= 0 then
             Player.gameOver = true
@@ -136,8 +140,8 @@ function Bubbles:spawnBubble()
     x = math.random(0, love.graphics.getWidth() - 0), -- Random x position 
     y = love.graphics.getHeight() + 0, -- Start slightly offscreen at the bottom
     size = math.random(0, 2) * 0.5, -- Random size scaling
-    speed = math.random(70, 100), -- Random float speed
-    wiggle_amplitude = math.random(1, 2), -- Random wiggle amplitude
+    speed = math.random(50, 250), -- Random float speed
+    wiggle_amplitude = math.random(1, 3), -- Random wiggle amplitude
     timer = 0 -- Timer for wiggle movement
   }
   table.insert(self.list, bubble) -- Add the bubble to the list
