@@ -1,11 +1,12 @@
 -- main.lua
 ----------------------------------------GLOBAL VARS----------------------------------------------------
-
+game_state = "menu" -- Game state
 ----------------------------------------REQUIRES----------------------------------------------------
 --Libreries and Scripts
 require "Scripts.Load_Media"
-require "Scripts.Menue"
--- require "Scripts.Menue"
+-- require "Scripts.menu"
+require "Scripts.player"
+-- require "Scripts.menu"
 lume = require "Scripts.lume" --https://github.com/rxi/lume --Extra usful functions
 
 
@@ -19,7 +20,8 @@ function love.load(arg)
   -- Load media
   sounds, cursor_s = load_media()
 
-  Menu:load()
+  -- Menu:load()
+  Player:load()
 end
 
 ----------------------------------------UPDATE----------------------------------------------------
@@ -29,7 +31,9 @@ function love.update(dt)
   cursor_x, cursor_y = love.mouse.getPosition()
 
   --Games update here
-  Menu:update(dt)
+  -- Menu:update(dt)
+  Player:update(dt)
+
 end
 
 function love.keypressed(key, scancode, isrepeat)
@@ -46,7 +50,8 @@ end
 
 function love.draw()
 
-  Menu:draw()
+  -- Menu:draw()
+  Player:draw()
   love.graphics.draw(cursor_s, cursor_x, cursor_y)
 
 end

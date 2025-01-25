@@ -1,4 +1,6 @@
-function love.load()
+Player = {}
+
+function Player:load()
     anchor = {
         x = love.graphics.getWidth() / 2,
         y = 70
@@ -15,7 +17,7 @@ function love.load()
     }
 end
 
-function love.update(dt)
+function Player:update(dt)
     local angular_acceleration = -character.gravity / rope_length * math.sin(character.angle)
     character.angular_velocity = character.angular_velocity + angular_acceleration * dt * 2  -- Faster acceleration
     
@@ -34,7 +36,7 @@ function love.update(dt)
     character.y = anchor.y + rope_length * math.cos(character.angle)
 end
 
-function love.draw()
+function Player:draw()
     love.graphics.setColor(150/255, 75/255, 0)
     love.graphics.line(anchor.x, anchor.y, character.x, character.y)
     
