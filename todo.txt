@@ -5,6 +5,6 @@ bubes spaning floating
 coalition if buble touches player
  
 nta:
-start menue
+start menu
 player movment and gun mouse tracking
 9leb 3la l assets
